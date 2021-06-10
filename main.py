@@ -1,53 +1,54 @@
-def playerChoice():
-    number = int(input("Are you player 1 or player 2? "))
-    if number != 1 and number != 2:
-        print("You are player " + number)
+word = input("Choose word: ")
+guessed = []
+wrong = []
+tries = 5
+# Turn Letters in blank dashes
+# Guess letter
 
+while tries > 0:
 
-def hangMan():
-    playerChoice()
-    answer = input("Please enter your word for player 2: ")
-    answerlist = []
-
-    if len(answer) > 1 and answer.isalpha():
-        answerlist.append(answer)
-        answer = list(answerlist[0])
-        display = []
-        used = []
-        incorrect = []
-        used.extend(display)
-        display.extend(answer)
-        for i in range(len(display)):
-            display[i] = "_"
-        print(' '.join(display))
-        print()
-        count = 0
-
-        while count > len(answer) and incorrect > 0:
-            incorrect = 0
-            count = 0
-            guess = input("Guess a letter: ")
-            guess = guess.lower()
-            print(count)
-            print(answerlist)
-
-            for i in range(len(answer)):
-                if answer[i] == guess and guess in used:
-                    display[i] = guess
-                    count = count + 1
-
-                    used.remove(guess)
-
-            if guess not in display:
-                incorrect = incorrect - 1
-                print("Wrong guess.")
-            else:
-                print("You ran out of guesses!")
+    out = ""
+    for letter in word:
+        if letter in guessed:
+            out = out + letter
         else:
-            print("You need a word!")
+            out = out + "_"
+
+    if out == word:
+        break
+
+    print("Guess a letter: ", out)
+    print(tries," guess are left")
+    guess = input()
+
+# check individual letters for/ guesses letters/ tries lost
+    if guess in guessed or guess in wrong:
+        print("You already guessed", guess)
+    elif guess in word:
+        print("The letter/word", guess)
+        tries = tries
+        guessed.append(guess)
+    else:
+        print("Incorrect")
+        tries = tries - 1
+        wrong.append(guess)
+
+# guess the word
+    if guess in guessed or guess == word:
+        print("Correct you guessed the right word:", guess)
+    elif guess in guessed or guess != word:
+        print("Wrong word, Try again!")
+
+    print()
+    if tries:
+        print("You guessed", word)
+    else:
+        print("No, the word is not", word)
+        break
 
 
-if __name__ == '__main__':
-    hangMan()
 
 
+
+#if __name__ == '__main__':
+#    print_hi('PyCharm')
